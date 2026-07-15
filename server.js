@@ -26,7 +26,7 @@ app.get("/betalen", async (req, res) => {
     const payment = await mollieClient.payments.create({
       amount: {
         currency: "EUR",
-        value: "1.00"
+        value: "2.00"
       },
       description: "Nanocrane spel",
       redirectUrl: "https://nanocrane-server-production.up.railway.app/betaald",
