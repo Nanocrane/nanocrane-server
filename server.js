@@ -48,9 +48,11 @@ app.get("/betalen", async (req, res) => {
 // Test: munt klaar zetten
 app.get("/betaald", (req, res) => {
 
-  muntKlaar = true;
-
-  res.send("Betaling ontvangen");
+  res.send(`
+    <h1>🎉 Bedankt voor je betaling!</h1>
+    <h2>Veel plezier met spelen.</h2>
+    <p>De Nanocrane start nu.</p>
+  `);
 
 });
 
