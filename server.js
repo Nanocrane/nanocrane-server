@@ -58,13 +58,36 @@ app.get("/betaald", (req, res) => {
 
 
 // Mollie meldt hier de echte betaling
-app.post("/webhook", express.urlencoded({ extended: true }), (req, res) => {
+app.post("/webhook", express.urlencoded({ extended: true }), async (req, res) => {
 
-  console.log("Webhook ontvangen");
+  try {
 
-  muntKlaar = true;
+    const paymentId = req.body.id;
 
-  res.send("OK");
+    console.log("Webhook ontvangen:", paymentId);
+
+    const payment = await mollieClient.payments.get(paymentId);
+
+    if (payment.status === "paid") {
+
+      console.log("Betaling goedgekeurd");
+
+      muntKlaar = true;
+
+    } else {
+
+      console.log("Betaling niet betaald:", payment.status);
+
+    }
+
+    res.send("OK");
+
+  } catch (error) {
+
+    console.log(error);
+    res.status(500).send("Fout");
+
+  }
 
 });
 
